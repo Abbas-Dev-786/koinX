@@ -20,16 +20,17 @@ const fetchCryptoData = async () => {
       }
     );
 
-    console.log(response.data);
-    // const cryptoData = response.data.map((coin) => ({
-    //   coinId: coin.id,
-    //   price: coin.current_price,
-    //   marketCap: coin.market_cap,
-    //   change24h: coin.price_change_percentage_24h,
-    // }));
+    const data = response.data;
+    const coins = Object.keys(response.data);
+    const cryptoData = coins.map((coin) => ({
+      coinId: coin,
+      price: data[coin].usd,
+      marketCap: data[coin].usd_market_cap,
+      change24h: data[coin].usd_24h_change,
+    }));
 
-    // await Crypto.insertMany(cryptoData); // Save data for all three coins in one operation
-    console.log("Crypto data updated successfully.");
+    await Crypto.insertMany(cryptoData); // Save data for all three coins in one operation
+    console.log("Crypto data added successfully.");
   } catch (error) {
     console.error("Error fetching crypto data:", error.message);
   }
