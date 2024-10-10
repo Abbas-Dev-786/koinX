@@ -8,7 +8,7 @@ const cryptoSchema = new mongoose.Schema(
       required: [true, "coinId is required"],
       enum: {
         values: Object.values(COINS),
-        message: `coinId must be either ${Object.values(ROLES).join(", ")}.`,
+        message: `coinId must be either ${Object.values(COINS).join(", ")}.`,
       },
     },
     price: { type: Number, required: [true, "price is required"] },

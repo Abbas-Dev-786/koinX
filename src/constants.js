@@ -6,4 +6,6 @@ const COINS = {
   ethereum: "ethereum",
 };
 
-module.exports = { BASE_URL, COINS };
+const CURRENCY = "usd";
+
+module.exports = { BASE_URL, COINS, CURRENCY };

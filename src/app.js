@@ -12,6 +12,10 @@ const { BASE_URL } = require("./constants");
 const AppError = require("./utils/AppError");
 const globalErrorHandler = require("./controllers/errorController");
 
+//importing cron job
+require("./jobs/coingekoJob");
+
+// initiliasing express app
 const app = express();
 
 // Implement CORS
