@@ -1,4 +1,3 @@
-const { ValidationError } = require("joi");
 // importing utils modules
 const AppError = require("../utils/AppError");
 
@@ -42,17 +41,6 @@ const handleValidationError = (err) => {
 // handle JSON syntax errors
 const handleJSONError = () => new AppError("Invalid JSON format", 400);
 
-// handle joi validation error
-const handleJoiValidationError = (err) => {
-  const error = err.details.map(({ message, type, context }) => ({
-    message: message.replace(/['"]/g, ""),
-    type,
-    name: context.key,
-  }));
-
-  return new AppError("Input validation error", 400, error);
-};
-
 // global error handler
 module.exports = (err, req, res, next) => {
   // setting defaults
@@ -69,9 +57,6 @@ module.exports = (err, req, res, next) => {
 
     if (!(error instanceof ValidationError) && error.name === "ValidationError")
       error = handleValidationError(error);
-
-    if (error instanceof ValidationError)
-      error = handleJoiValidationError(error);
 
     sendProdError(error, res);
   }
