@@ -1,0 +1,37 @@
+# .cpanel.yml
+
+# Specify the version of the schema
+---
+version: 2
+
+# Set up deployment tasks
+deployment:
+  tasks:
+    - name: "Install Dependencies"
+      command: "npm install"
+
+    - name: "Set Environment Variables"
+      command: |
+        echo 'PORT=8000' >> .env
+        echo 'NODE_ENV="prod"' >> .env 
+        echo 'DATABASE_URI="${DATABASE_URI}"' >> .env
+        echo 'DATABASE_PASSWORD="${DATABASE_PASSWORD}"' >> .env
+
+    - name: "Run Migrations (if any)"
+      command: "npx migrate up"
+
+    - name: "Start Application with PM2"
+      command: |
+        npm install -g pm2
+        pm2 start src/server.js --name crypto-tracker --watch
+        pm2 save
+
+  pre_deploy:
+    - name: "Create Environment File"
+      command: "touch .env"
+
+  post_deploy:
+    - name: "Restart PM2 after Deploy"
+      command: |
+        pm2 reload crypto-tracker
+        pm2 save
