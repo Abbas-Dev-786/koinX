@@ -12,6 +12,9 @@ const { BASE_URL } = require("./constants");
 const AppError = require("./utils/AppError");
 const globalErrorHandler = require("./controllers/errorController");
 
+// route handlers
+const cryptoRoutes = require("./routes/cryptoRoutes");
+
 //importing cron job
 require("./jobs/coingekoJob");
 
@@ -36,11 +39,12 @@ app.use(xss());
 // Prevent parameter pollution
 app.use(
   hpp({
-    whitelist: [],
+    whitelist: ["coin"],
   })
 );
 
 // routes
+app.use(`${BASE_URL}/crypto`, cryptoRoutes);
 app.get(`${BASE_URL}/test`, (req, res) => {
   res.status(200).json({ message: "API is working" });
 });
