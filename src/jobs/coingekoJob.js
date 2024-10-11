@@ -15,7 +15,7 @@ const fetchCryptoData = async () => {
           include_24hr_change: true,
         },
         headers: {
-          "x-cg-demo-api-key": "CG-4Qt3x3bJmPfYzZXCzvYDhLvW	",
+          "x-cg-demo-api-key": process.env.COIN_GEKO_API_KEY,
         },
       }
     );
