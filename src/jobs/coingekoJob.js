@@ -37,4 +37,4 @@ const fetchCryptoData = async () => {
 };
 
 // Schedule this function to run every 2 hours using a scheduler like node-cron.
-cron.schedule("* * * * *", fetchCryptoData);
+cron.schedule("* */2 * * *", fetchCryptoData);
