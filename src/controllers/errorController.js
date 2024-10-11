@@ -55,8 +55,7 @@ module.exports = (err, req, res, next) => {
     if (error instanceof SyntaxError && "body" in error)
       error = handleJSONError();
 
-    if (!(error instanceof ValidationError) && error.name === "ValidationError")
-      error = handleValidationError(error);
+    if (error.name === "ValidationError") error = handleValidationError(error);
 
     sendProdError(error, res);
   }
